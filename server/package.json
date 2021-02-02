@@ -1,15 +1,15 @@
 {
-  "name": "queueapp",
+  "name": "queueapp-server",
   "version": "1.0.0",
-  "description": "the queueing app",
+  "description": "the queueing app server",
   "main": "server/app.js",
   "author": "Kareem Ali",
   "license": "MIT",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-server": "tsc && node build/index.js",
+    "start-server": "tsc && node ./build/app.js",
     "start": "nodemon -e ts -w ./ -x npm run start-server",
-    "typeorm": "./node_modules/typeorm/cli.js ",
+    "typeorm": "./node_modules/typeorm/cli.js",
     "build": "tsc -b"
   },
   "dependencies": {
