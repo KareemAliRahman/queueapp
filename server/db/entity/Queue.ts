@@ -1,19 +1,19 @@
-import { BaseEntity, Column, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User";
 
-
+@Entity()
 export class Queue extends BaseEntity {
 
   @PrimaryGeneratedColumn("rowid", { name: 'id' })
   id: number;
 
-  @Column({ type: "string", length: 100 , nullable: false })
+  @Column({ length: 100 , nullable: false })
   name: string;
 
-  @Column({ type: "string", length: 100 , nullable: true })
+  @Column({ length: 100 , nullable: true })
   organization: string;
 
-  @Column({ type: "string", length: 300 , nullable: true })
+  @Column({ length: 300 , nullable: true })
   Description: string;
 
   @ManyToOne(type => User, admin => admin.queues)

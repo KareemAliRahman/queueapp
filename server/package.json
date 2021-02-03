@@ -9,6 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-server": "tsc && node ./build/app.js",
     "start": "nodemon -e ts -w ./ -x npm run start-server",
+    "start-ts": "nodemon --exec ts-node ./app.ts",
     "typeorm": "./node_modules/typeorm/cli.js",
     "build": "tsc -b"
   },
