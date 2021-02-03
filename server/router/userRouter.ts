@@ -18,11 +18,10 @@ UserRouter.post('/', async (req, res) => {
       , req.body.lastName
       , req.body.email
       , req.body.password);
-    res.status(201).json({ message: "new user created" });
+    res.status(202).json({ message: "new user created" });
   }
   catch(err){
-    console.log(err);
-    res.status(400).json({ message: error })
+    res.status(400).json({ errors : err});
   }
 });
 

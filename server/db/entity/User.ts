@@ -1,5 +1,5 @@
-import { IsEmail, Length, Min } from "class-validator";
-import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, Unique } from "typeorm";
+import { IsEmail, IsNotEmpty, isNotEmpty, isValidationOptions, Length, Min, minLength, MinLength } from "class-validator";
+import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany } from "typeorm";
 import { Queue } from "./Queue";
 
 @Entity()
@@ -12,15 +12,18 @@ export class User extends BaseEntity{
     email: string;
 
     @Column({nullable: false})
-    @Min(5) 
+    @IsNotEmpty()
+    @MinLength(5)
     password: string;
 
     @Column({ length: 50 , nullable: false })
-    @Length(1,50)
+    @IsNotEmpty()
+    @MinLength(1)
     firstName: string;
 
     @Column({ length: 50 , nullable: false })
-    @Length(1,50)
+    @IsNotEmpty()
+    @MinLength(1)
     lastName: string;
 
     @OneToMany( type => Queue, queue => queue.admin)

@@ -1,4 +1,5 @@
 import { Router }  from 'express';
+import { Queue } from '../db/entity/Queue';
 
 export const QueueRouter = Router();
 
@@ -7,6 +8,9 @@ QueueRouter.get('/', (_req, res, _next) => {
 });
 
 // POST new queue
+QueueRouter.post('/', (req, res) => {
+  
+});
 
 // PATCH queue -> change queue
 
