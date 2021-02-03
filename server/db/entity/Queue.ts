@@ -1,3 +1,4 @@
+import { Length } from "class-validator";
 import { BaseEntity, Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User";
 
@@ -8,12 +9,15 @@ export class Queue extends BaseEntity {
   id: number;
 
   @Column({ length: 100 , nullable: false })
+  @Length(1, 100)
   name: string;
 
   @Column({ length: 100 , nullable: true })
+  @Length(1, 100)
   organization: string;
 
   @Column({ length: 300 , nullable: true })
+  @Length(1, 300)
   Description: string;
 
   @ManyToOne(type => User, admin => admin.queues)
