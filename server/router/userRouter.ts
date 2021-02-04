@@ -11,8 +11,8 @@ UserRouter.get('/', (_req, res, _next) => {
 
 // POST Register
 UserRouter.post('/', async (req, res) => {
+  const userRepo = getCustomRepository(UserRepo);
   try{
-    const userRepo = getCustomRepository(UserRepo);
     await userRepo.registerNewUser(req.body.firstName
       , req.body.lastName
       , req.body.email
@@ -25,6 +25,20 @@ UserRouter.post('/', async (req, res) => {
 });
 
 // POST login
+UserRouter.post('/login', async (req, res) => {
+  const userRepo = getCustomRepository(UserRepo);
+  try{
+      await userRepo.loginUser(req.body.email, req.body.password);
+  }
+  catch(err){
+    res.status(404).json({error: err.message});
+    return;
+  }
+  res.status(201).json({message: "logged in"});
+
+
+});
+
 
 // POST logout
 
