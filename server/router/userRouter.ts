@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { getCustomRepository, getRepository, QueryFailedError } from 'typeorm';
-import { User } from '../db/entity/User';
 import { UserRepo } from '../db/repository/UserRepo';
 
 export const UserRouter = Router();
@@ -18,10 +17,10 @@ UserRouter.post('/', async (req, res) => {
       , req.body.lastName
       , req.body.email
       , req.body.password);
-    res.status(202).json({ message: "new user created" });
+    res.status(202).json({ message: "user is successfully registered." });
   }
   catch(err){
-    res.status(400).json({ errors : err});
+    res.status(400).json({errors : err});
   }
 });
 
