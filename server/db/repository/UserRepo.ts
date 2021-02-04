@@ -12,8 +12,6 @@ export class UserRepo extends Repository<User>{
       , email: string
       , password: string
       ){
-        // validate password
-        // this.passwordCheck(password);
         let user = new User();
         user.firstName = firstName;
         user.lastName = lastName;
@@ -30,9 +28,7 @@ export class UserRepo extends Repository<User>{
       if(!user){
         throw new Error("User not registered");
       }
-      console.log(password, user);
       const valid = await compare(password, user.password);
-      console.log(valid);
       if(!valid){
         throw new Error("invalid password");
       }

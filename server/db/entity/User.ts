@@ -5,7 +5,7 @@ import { Queue } from "./Queue";
 @Entity()
 export class User extends BaseEntity{
     @PrimaryGeneratedColumn("uuid", { name: 'id' })
-    id: number;
+    id: string;
 
     @Column({unique: true, nullable: false})
     @IsEmail()

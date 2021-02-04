@@ -1,12 +1,12 @@
 import { Length } from "class-validator";
-import { BaseEntity, Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User";
 
 @Entity()
 export class Queue extends BaseEntity {
 
-  @PrimaryGeneratedColumn("rowid", { name: 'id' })
-  id: number;
+  @PrimaryGeneratedColumn("uuid", { name: 'id' })
+  id: string;
 
   @Column({ length: 100 , nullable: false })
   @Length(1, 100)
@@ -18,11 +18,12 @@ export class Queue extends BaseEntity {
 
   @Column({ length: 300 , nullable: true })
   @Length(1, 300)
-  Description: string;
+  description: string;
 
   @ManyToOne(type => User, admin => admin.queues)
   admin: User;
 
   @ManyToMany(type => User, member => member.queues)
+  @JoinTable()
   members: User[];
 }

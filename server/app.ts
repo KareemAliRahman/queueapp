@@ -1,33 +1,38 @@
-import express from "express"; 
+import express, { Request, Response } from "express"; 
 import { createConnection } from "typeorm";
-import { User } from "./db/entity/User";
-import { UserRepo } from "./db/repository/UserRepo";
 import { UserRouter } from "./router/userRouter";
 import { QueueRouter } from "./router/queueRouter"
-import { urlencoded, json } from 'body-parser'
+import { AuthRouter } from "./router/AuthRouter";
+import { verify } from "jsonwebtoken";
 
 const app = express();
+
+const authenticateToken = (req : Request, res :Response, next) => {
+  const authHeader = req.headers.authorization;
+  if(!authHeader) return res.sendStatus(401);
+  const accessToken = authHeader.split(' ')[1];
+  verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err , user ) => {
+    if(err) return res.sendStatus(403);
+    req['user'] = user;
+    next();
+  });
+}
+
 const startServer = async () => {
   // connecting to postgres db
   createConnection();
-  // createConnection().then(connection => {
-  //  const userRepo =  connection.getCustomRepository(UserRepo);
-  //  userRepo.registerNewUser('hazem', 'ali', 'hazem@ali.com', 'hazem');
-    
-  // });
 
   // middleware for post requests
-  app.use(urlencoded({extended: true}));
-  app.use(json());
+  app.use(express.json())
     
   app.get('/', (_req, res, _next) => {      
-    console.log('get request');
     res.send('Hello world')
   });
 
   // routes
+  app.use('/', AuthRouter);
   app.use('/users', UserRouter);
-  app.use('/queues', QueueRouter);
+  app.use('/queues', authenticateToken, QueueRouter);
 
   app.listen(process.env.PORT || 4000, () => {
     console.log("server started");
