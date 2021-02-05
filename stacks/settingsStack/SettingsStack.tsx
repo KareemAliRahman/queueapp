@@ -9,7 +9,7 @@ const Stack = createStackNavigator<SettingsParamList>();
 
 export const SettingsStack: React.FC<SettingsStackProps> = ({}) => {
     return(
-        <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='Settings'>
+        <Stack.Navigator screenOptions={{headerShown: true}} initialRouteName='Settings'>
             <Stack.Screen name='Settings'  component={Settings} />
         </Stack.Navigator>
     );

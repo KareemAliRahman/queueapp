@@ -27,12 +27,13 @@ export const Tabs: React.FC<TabsProps> = ({}) => {
                     },
                 })}
                 tabBarOptions={{
-                activeTintColor: 'teal',
-                inactiveTintColor: 'gray',
+                    // activeTintColor: '#0e7a9a', //default apple system blue
+                    activeTintColor: '#0e639a',
+                    inactiveTintColor: 'gray',
                 }}
             >
             <tabs.Screen options={{title:'Queues'}} name='QueuesStack'  component={QueuesStack} />
-            <tabs.Screen options={{title:'MyQueues'}} name='MyQueuesStack'  component={MyQueuesStack} />
+            <tabs.Screen options={{title:'My Queues'}} name='MyQueuesStack'  component={MyQueuesStack} />
             <tabs.Screen options={{title:'Settings'}}  name='SettingsStack'  component={SettingsStack} />
         </tabs.Navigator>
     );
