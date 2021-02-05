@@ -1,12 +1,12 @@
 import { Center } from '../../../helper-compnents/Center';
+import { AuthNavProps } from '../AuthParamList';
 import { Text } from 'react-native';
-import { QueuesNavProps } from '../QueuesParamList';
 
-export function NewQueue({navigation, route} : QueuesNavProps<'NewQueue'>){
+export function Login({navigation, route} : AuthNavProps<'Login'>){
     return (
       <Center>
         <Text>
-          I am a NewQueue screen
+          I am a login screen
         </Text>
       </Center>
     );

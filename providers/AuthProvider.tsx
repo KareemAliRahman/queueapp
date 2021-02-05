@@ -11,11 +11,11 @@ type User = null | {
 
 export const AuthContext = React.createContext<{
     user: User,
-    loginUser: () => void,
+    login: () => void,
     logout: () => void
 }>({
     user: null,
-    loginUser: () => {},
+    login: () => {},
     logout: () => {}
 });
 
@@ -26,7 +26,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     return(
         <AuthContext.Provider value={{
             user,
-            loginUser: () => {
+            login: () => {
 
                 const user = { firstName: 'kareem', lastName: 'Ali'
                 , email: "kareem@ali.com" , id: "1"};
