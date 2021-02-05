@@ -1,3 +1,4 @@
+import React from 'react';
 import { Center } from '../../../helper-compnents/Center';
 import { Text } from 'react-native';
 import { SettingsNavProps } from '../SettingsParamList';

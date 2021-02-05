@@ -5,11 +5,12 @@ import { TabsParamList } from './TabsParamList';
 import { QueuesStack } from './stacks/queuesStack/QueuesStack';
 import { MyQueuesStack } from './stacks/myQueuesStack/MyQueuesStack';
 import { SettingsStack } from './stacks/settingsStack/SettingsStack';
-interface UserTabsProps{};
+
+interface TabsProps{};
 
 const tabs = createBottomTabNavigator<TabsParamList>();
 
-export const Tabs: React.FC<UserTabsProps> = ({}) => {
+export const Tabs: React.FC<TabsProps> = ({}) => {
     return(
         <tabs.Navigator initialRouteName='QueuesStack'
                 screenOptions={({ route }) => ({

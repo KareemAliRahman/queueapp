@@ -1,3 +1,4 @@
+import React from 'react';
 import { Center } from '../../../helper-compnents/Center';
 import { AuthNavProps } from '../AuthParamList';
 import { Text } from 'react-native';

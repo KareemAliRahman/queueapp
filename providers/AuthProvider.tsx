@@ -21,7 +21,7 @@ export const AuthContext = React.createContext<{
 
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
-    const [ user, setAppUser ] = React.useState<User>(null);
+    const [ user, setUser ] = React.useState<User>(null);
 
     return(
         <AuthContext.Provider value={{
@@ -30,15 +30,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
 
                 const user = { firstName: 'kareem', lastName: 'Ali'
                 , email: "kareem@ali.com" , id: "1"};
-                setAppUser(user);
-                AsyncStorage.removeItem('doctor');
+                setUser(user);
                 AsyncStorage.setItem('user', JSON.stringify(user));
 
             },
             logout: () => {
-                setAppUser(null);
+                setUser(null);
                 AsyncStorage.removeItem('user');
-                AsyncStorage.removeItem('doctor');
             }
         }}>
             {children}
