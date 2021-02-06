@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { AuthNavProps } from '../AuthParamList';
 import { StyleSheet, Text, View } from 'react-native';
 import { AuthContext } from '../../../providers/AuthProvider';
-import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TextInput, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 
 export function Login({navigation, route} : AuthNavProps<'Login'>){
   const {login} = useContext(AuthContext);
@@ -12,26 +12,24 @@ export function Login({navigation, route} : AuthNavProps<'Login'>){
         queues
       </Text>
       <View style={styles.registerView}>
-          <TouchableWithoutFeedback  style={styles.button} onPress={() => {
+          <TouchableOpacity  style={styles.button} onPress={() => {
             navigation.navigate('Register');
           }}>
               <Text style={styles.text}>Register</Text>
-          </TouchableWithoutFeedback>
+          </TouchableOpacity>
           <View style={styles.outTextView}>
             <Text style={styles.outText}>or</Text>
           </View>
         </View>
       <View style={styles.loginForm}>
-        <TextInput placeholder="email" style={styles.textInput}>
-        </TextInput>
-        <TextInput placeholder="password" style={styles.textInput}>
-        </TextInput>
-          <TouchableWithoutFeedback  style={styles.button} onPress={() => {
+        <TextInput placeholder="email" style={styles.textInput} autoCompleteType="email"/>
+        <TextInput placeholder="password" style={styles.textInput} autoCompleteType="password" secureTextEntry={true} />
+          <TouchableOpacity  style={styles.button} onPress={() => {
             login();
             console.log('logging in');
           }}>
               <Text style={styles.text}>Sign In</Text>
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
       </View>
     </View>
   );

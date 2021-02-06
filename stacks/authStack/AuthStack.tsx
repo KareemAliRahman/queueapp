@@ -26,7 +26,7 @@ const stackHeaderOptions =
 export const AuthStack: React.FC<AuthStackProps> = ({}) => {
     
     return(
-        <Stack.Navigator screenOptions={stackHeaderOptions}>
+        <Stack.Navigator screenOptions={stackHeaderOptions} mode="modal">
             <Stack.Screen name='Login'  component={Login} />
             <Stack.Screen name='Register'  component={Register} />
         </Stack.Navigator>
