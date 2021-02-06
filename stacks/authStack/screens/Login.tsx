@@ -1,35 +1,43 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthNavProps } from '../AuthParamList';
 import { StyleSheet, Text, View } from 'react-native';
 import { AuthContext } from '../../../providers/AuthProvider';
 import { TextInput, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { apiCall, http } from '../../../api/api';
 
 export function Login({navigation, route} : AuthNavProps<'Login'>){
   const {login} = useContext(AuthContext);
+  const [errorMsg, setErrorMsg] = useState("aslkl");
+
   return (
     <View style={styles.container}>
       <Text style={styles.logo}>
         queues
       </Text>
+      <View style={styles.loginForm}>
+        <Text style={styles.errorMsg}>{errorMsg}</Text>
+        <TextInput placeholder="email" style={styles.textInput} autoCompleteType="email"/>
+        <TextInput placeholder="password" style={styles.textInput} autoCompleteType="password" secureTextEntry={true} />
+          <TouchableOpacity  style={styles.button} onPress={async () => {
+            try{
+              const response = await apiCall();
+            }catch(error){
+              console.log(error);
+              setErrorMsg(error);
+            }
+          }}>
+              <Text style={styles.text}>Sign In</Text>
+            </TouchableOpacity>
+      </View>
+      <View style={styles.outTextView}>
+        <Text style={styles.outText}>or</Text>
+      </View>
       <View style={styles.registerView}>
           <TouchableOpacity  style={styles.button} onPress={() => {
             navigation.navigate('Register');
           }}>
               <Text style={styles.text}>Register</Text>
           </TouchableOpacity>
-          <View style={styles.outTextView}>
-            <Text style={styles.outText}>or</Text>
-          </View>
-        </View>
-      <View style={styles.loginForm}>
-        <TextInput placeholder="email" style={styles.textInput} autoCompleteType="email"/>
-        <TextInput placeholder="password" style={styles.textInput} autoCompleteType="password" secureTextEntry={true} />
-          <TouchableOpacity  style={styles.button} onPress={() => {
-            login();
-            console.log('logging in');
-          }}>
-              <Text style={styles.text}>Sign In</Text>
-            </TouchableOpacity>
       </View>
     </View>
   );
@@ -37,7 +45,7 @@ export function Login({navigation, route} : AuthNavProps<'Login'>){
 
 const styles = StyleSheet.create({
   container :{
-    flex: 4,
+    flex: 5,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
@@ -73,7 +81,9 @@ const styles = StyleSheet.create({
     fontFamily: 'OpenSans_400Regular',
   },
   outTextView: {
-    alignItems: 'center'
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   outText: {
     color: '#0e639a',
@@ -83,5 +93,11 @@ const styles = StyleSheet.create({
   registerView:{
     flex: 1,
     width: '70%',
+  },
+  errorMsg:{
+    color: 'red',
+    fontSize: 20,
+    fontFamily: 'OpenSans_400Regular',
+    height: 40,
   }
 })
