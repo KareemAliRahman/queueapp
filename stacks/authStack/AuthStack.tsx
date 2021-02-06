@@ -9,26 +9,26 @@ interface AuthStackProps{}
 const Stack = createStackNavigator<AuthParamList>();
 
 const stackHeaderOptions = 
-                {
-                    title: 'queues',
-                    headerStyle: {
-                        backgroundColor: '#0e639a',
-                        borderBottomStartRadius: 15,
-                        borderBottomEndRadius: 15
-                    },
-                    headerTintColor: '#fff',
-                    headerTitleStyle: {
-                        alignSelf: 'center',
-                        fontFamily: 'LobsterTwo_700Bold',
-                        fontSize: 25
-                    }};
+{
+    title: 'queues',
+    headerStyle: {
+        backgroundColor: '#0e639a',
+        borderBottomStartRadius: 15,
+        borderBottomEndRadius: 15
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+        alignSelf: 'center',
+        fontFamily: 'LobsterTwo_700Bold',
+        fontSize: 25
+}};
 
 export const AuthStack: React.FC<AuthStackProps> = ({}) => {
     
     return(
-        <Stack.Navigator screenOptions={{headerShown: true}}>
-            <Stack.Screen name='Login'  component={Login} options={stackHeaderOptions} />
-            <Stack.Screen name='Register'  component={Register} options={stackHeaderOptions}/>
+        <Stack.Navigator screenOptions={stackHeaderOptions}>
+            <Stack.Screen name='Login'  component={Login} />
+            <Stack.Screen name='Register'  component={Register} />
         </Stack.Navigator>
     );
 };

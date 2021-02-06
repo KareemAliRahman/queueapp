@@ -5,6 +5,7 @@ import { TabsParamList } from './TabsParamList';
 import { QueuesStack } from './stacks/queuesStack/QueuesStack';
 import { MyQueuesStack } from './stacks/myQueuesStack/MyQueuesStack';
 import { SettingsStack } from './stacks/settingsStack/SettingsStack';
+import { StyleSheet } from 'react-native';
 
 interface TabsProps{};
 
@@ -13,6 +14,7 @@ const tabs = createBottomTabNavigator<TabsParamList>();
 export const Tabs: React.FC<TabsProps> = ({}) => {
     return(
         <tabs.Navigator initialRouteName='QueuesStack'
+                
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size }) => {
                         let iconName;
@@ -28,8 +30,9 @@ export const Tabs: React.FC<TabsProps> = ({}) => {
                 })}
                 tabBarOptions={{
                     // activeTintColor: '#0e7a9a', //default apple system blue
-                    activeTintColor: '#0e639a',
-                    inactiveTintColor: 'gray',
+                    activeTintColor: '#fff',
+                    inactiveTintColor: '#0c3652',
+                    style: styles.tabs
                 }}
             >
             <tabs.Screen options={{title:'Queues'}} name='QueuesStack'  component={QueuesStack} />
@@ -38,3 +41,11 @@ export const Tabs: React.FC<TabsProps> = ({}) => {
         </tabs.Navigator>
     );
 }
+
+const styles = StyleSheet.create({
+    tabs:{
+        borderTopStartRadius: 15,
+        borderTopEndRadius: 15,
+        backgroundColor: '#0e639a',
+    }
+});

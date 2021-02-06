@@ -9,9 +9,19 @@ interface QueuesStackProps{}
 
 const Stack = createStackNavigator<QueuesParamList>();
 
+const stackHeaderOptions = 
+{
+    title: "",
+    headerStyle: {
+        backgroundColor: '#0e639a',
+        borderBottomStartRadius: 15,
+        borderBottomEndRadius: 15
+    },
+    headerTintColor: '#fff',
+}
 export const QueuesStack: React.FC<QueuesStackProps> = ({}) => {
     return(
-        <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName='QueuesList'>
+        <Stack.Navigator screenOptions={stackHeaderOptions} initialRouteName='QueuesList'>
             <Stack.Screen name='QueuesList'  component={QueuesList} />
             <Stack.Screen name='QueueInfo'  component={QueueInfo} />
             <Stack.Screen name='NewQueue'  component={NewQueue} />
