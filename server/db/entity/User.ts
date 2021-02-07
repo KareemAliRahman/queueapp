@@ -18,12 +18,10 @@ export class User extends BaseEntity{
 
     @Column({ length: 50 , nullable: false })
     @IsNotEmpty()
-    @MinLength(1)
     firstName: string;
 
     @Column({ length: 50 , nullable: false })
-    @IsNotEmpty()
-    @MinLength(1)
+    @IsNotEmpty({message: "first name should'nt be empty"})
     lastName: string;
 
     @OneToMany( type => Queue, queue => queue.admin)

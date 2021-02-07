@@ -15,6 +15,11 @@ UserRouter.get('/' , (req, res, _next) => {
 // POST Register
 UserRouter.post('/', async (req, res) => {
   const userRepo = getCustomRepository(UserRepo);
+  const user = await userRepo.checkUserExist(req.body.email);
+  if(user){
+    res.status(404).json({message: "user already exisits"});
+    return;
+  }
   try{
     await userRepo.registerNewUser(req.body.firstName
       , req.body.lastName
@@ -23,6 +28,10 @@ UserRouter.post('/', async (req, res) => {
     res.status(202).json({ message: "user is successfully registered." });
   }
   catch(err){
-    res.status(400).json({errors : err});
+    // errors here should be ValidationError by class-validator
+    //select the first constraint from the first ValidationError
+    const message = Object.entries(err[0].constraints)[0][1];
+
+    res.status(400).json({message : message});
   }
 });

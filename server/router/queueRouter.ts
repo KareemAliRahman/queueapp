@@ -13,7 +13,7 @@ QueueRouter.get('/', async (req, res, _next) => {
     // const queues = await userRepo.find({where: {id: user.id}, relations: ['queues']});
     res.status(200).json({queues: user.queues});
   }catch(error){
-    res.status(403).json({err: error,error: "failed to get all queues of admin"});
+    res.status(403).json({error: error,message: "failed to get all queues of admin"});
   }
 });
 
@@ -40,7 +40,7 @@ QueueRouter.post('/', async (req, res) => {
       , req.body.description);
     res.status(200).json({message: "queue created successfully"});
   }catch(error){
-    res.status(403).json({err: error,error: "failed to create new queue"});
+    res.status(403).json({error: error,message: "failed to create new queue"});
   }
 });
 
@@ -59,12 +59,12 @@ QueueRouter.delete('/', async (req, res) => {
     const queue = await queueRepo.findOne({relations: ['admin']});
     console.log(queue, user);
     if(queue.admin.id !== user.id){
-      return res.status(401).json({error: "queue admin only can delete a queue"})
+      return res.status(401).json({message: "queue admin only can delete a queue"})
     }
     await queueRepo.remove(queue);
     res.status(200).json({message: "queue removed successfully"});
   }catch(err){
-    res.status(403).json({err: err, error: "failed to remove queue"});
+    res.status(403).json({error: err, message: "failed to remove queue"});
   }
 });
 
@@ -81,7 +81,7 @@ QueueRouter.post('/members', async (req, res) => {
     queueRepo.enlistInQueue(queue, user);
     res.status(200).json({message: "member added successfully"});
   }catch(err){
-    res.status(403).json({message: err.message , error: "failed to add member to queue"});
+    res.status(403).json({error: err.message , message: "failed to add member to queue"});
   }
 });
 
@@ -97,6 +97,6 @@ QueueRouter.delete('/members', async (req, res) => {
     queueRepo.removeFromQueue(queue, user);
     res.status(200).json({message: "member removed successfully"});
   }catch(err){
-    res.status(403).json({message: err.message, error: "failed to remove member from queue"});
+    res.status(403).json({error: err.message, message: "failed to remove member from queue"});
   }
 });

@@ -11,23 +11,33 @@ let refreshTokens = [];
 AuthRouter.post('/login', async (req, res) => {
   const userRepo = getCustomRepository(UserRepo);
   try{
-      const user = await userRepo.loginUser(req.body.email, req.body.password);
-      const accessToken = generateAccessToken(user.id);
-      const refereshToken = sign({userid: user.id}
-        , process.env.REFRESH_TOKEN_SECRET , {expiresIn: "7d"});
-      refreshTokens.push(refereshToken);
-      res.status(201).json({accessToken : accessToken
-        , refreshToken: refereshToken 
-        , message: "logged in"}); 
+    const email = req.body.email;
+    const password = req.body.password;
+    if(!email || ! password){
+      throw new Error("empty email or password");
     }
+    const user = await userRepo.loginUser(email , password);
+    const accessToken = generateAccessToken(user.id);
+    const refereshToken = sign({userid: user.id}
+      , process.env.REFRESH_TOKEN_SECRET , {expiresIn: "7d"});
+    refreshTokens.push(refereshToken);
+    res.status(201).json({accessToken : accessToken
+      , refreshToken: refereshToken 
+      , message: "logged in"}); 
+  }
   catch(err){
-    res.status(404).json({error: err.message});
+    if(err.message){
+      res.status(404).json({message: err.message});
+      return;
+    }
+    res.status(404).json({message: err.details});
     return;
   }
 });
 
 // POST logout
 AuthRouter.delete('/logout', (req, res) => {
+  console.log(req);
   refreshTokens.filter((token => token !== req.body.refereshToken));
   res.sendStatus(204);
 });
