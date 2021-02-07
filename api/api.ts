@@ -1,6 +1,8 @@
 // const serverIp: string = 'http://10.0.2.2:4000/';
 const serverIp: string = 'http://192.168.1.39:4000';
 
+let accessToken : string = "";
+
 //-------- utility functions --------------
 interface HttpResponse<T> extends Response{
   parsedBody? : T;
@@ -9,34 +11,32 @@ interface HttpResponse<T> extends Response{
 export async function http<T>(
   request: RequestInfo
 ): Promise<HttpResponse<T>> {
-  // const response : HttpResponse<T> = await fetch(request);
-  const chain = fetch(request).catch(_e => Promise.reject("no internet!")
+  const response: HttpResponse<T> = await fetch(
+    request
+  );
+  try {
+    // may error if there is no body
+    response.parsedBody = await response.json();
+  } catch (ex) {
+    throw new Error("bad data");
+  }
 
-  
-  // try{
-  //   const response : HttpResponse<T> = await fetch(request);
-  //   try{
-  //     response.parsedBody = await response.json();
-  //     if(!response.ok){
-  //       return new Error(response.parsedBody);
-  //     }
-  //     return response;
-  //   }catch(err){
-  //     return err;
-  //   }
-  // }
-  // catch(err){
-  //   // console.log(err);
-  //   throw err;
-  // }
+  if (!response.ok && response.parsedBody) {
+    throw new Error(response.parsedBody.message);
+  }
+  return response;
 }
 
-export async function register(firstName: string, lastName: string,
+export async function httpRegister(firstName: string, lastName: string,
   email: string, password:string) {
-  return await http(new Request(
+  const response = await http<{message: string}>(new Request(
     serverIp + "/users",
     {
       method: "post",
+      headers: {
+        'Accept' : 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         firstName: firstName,
         lastName: lastName,
@@ -44,35 +44,23 @@ export async function register(firstName: string, lastName: string,
         password: password
       })
     }
-  ))
+  ));
+  return response;
 }
 
-export async function login(email: string, password:string) {
-  try {
-    const response =  await http<{message: string}>(new Request(
-      serverIp + "/login",
-      {
-        method: "post",
-        body: JSON.stringify({
-          email: email,
-          password: password
-        })
-      }
-    ));
-  } catch (error) {
-    throw error;
-  }
-}
-
-export async function apiCall() {
-  try {
-    await login("kareem", "ali");
-  } catch (error) {
-    throw error; 
-  }
-}
-
-
-export async function test() {
-  const p = setTimeout(() => Promise.resolve(1), 2000);
+export async function httpLogin(email: string, password:string) {
+  const req = new Request(serverIp + "/login",
+    {
+      method: "post",
+      headers: {
+        'Accept' : 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+  });
+  const response =  await http<{message: string, accessToken: string, refreshToken: string}>(req);
+  return response;
 }

@@ -1,13 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AuthNavProps } from '../AuthParamList';
 import { StyleSheet, Text, View } from 'react-native';
 import { AuthContext } from '../../../providers/AuthProvider';
-import { TextInput, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
-import { apiCall, http } from '../../../api/api';
+import { TextInput, TouchableOpacity } from 'react-native';
 
 export function Login({navigation, route} : AuthNavProps<'Login'>){
   const {login} = useContext(AuthContext);
-  const [errorMsg, setErrorMsg] = useState("aslkl");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
 
   return (
     <View style={styles.container}>
@@ -16,14 +17,22 @@ export function Login({navigation, route} : AuthNavProps<'Login'>){
       </Text>
       <View style={styles.loginForm}>
         <Text style={styles.errorMsg}>{errorMsg}</Text>
-        <TextInput placeholder="email" style={styles.textInput} autoCompleteType="email"/>
-        <TextInput placeholder="password" style={styles.textInput} autoCompleteType="password" secureTextEntry={true} />
+        <TextInput placeholder="email" style={styles.textInput} autoCompleteType="email" 
+         onChangeText={ change => {
+           setEmail(change);
+          }}
+        />
+        <TextInput placeholder="password" style={styles.textInput} autoCompleteType="password" secureTextEntry={true} 
+         onChangeText={ change => {
+           setPass(change);
+          }}
+        />
           <TouchableOpacity  style={styles.button} onPress={async () => {
             try{
-              const response = await apiCall();
+              setErrorMsg("");
+              await login(email, pass);
             }catch(error){
-              console.log(error);
-              setErrorMsg(error);
+              setErrorMsg(error.message);
             }
           }}>
               <Text style={styles.text}>Sign In</Text>
