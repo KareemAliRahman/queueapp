@@ -106,3 +106,20 @@ dist
 
 # pgdata
 pgdata
+
+# from expo .gitignore before merge
+node_modules/**/*
+*/node_modules/**/*
+.expo/*
+*/.expo/*
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+
+# macOS
+.DS_Store
