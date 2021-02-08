@@ -1,22 +1,23 @@
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { httpLogin } from '../api/api';
-import { acc } from 'react-native-reanimated';
+import { httpLogin, httpLogout, httpToken } from '../api/api';
 
 interface AuthProviderProps{}
 type User = null | {
   email: string,
-  refreshToken: string | undefined
+  refreshToken: string 
 }
 
 export const AuthContext = React.createContext<{
     user: User,
     login: (email: string, password: string) => void,
+    authenticate: () => void,
     logout: () => void,
     accessToken: string 
 }>({
     user: null,
     login: () => {},
+    authenticate: () => {},
     logout: () => {},
     accessToken: ""
 });
@@ -38,9 +39,30 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
                 setUser(user);
                 AsyncStorage.setItem('user', JSON.stringify(user));
             },
-            logout: () => {
+            authenticate: async () => {
+                const storedUser = await AsyncStorage.getItem('user');
+                if(storedUser){
+                    const user : User = JSON.parse(storedUser);
+                    const refreshToken = user?.refreshToken;
+                    const email = user?.email;
+                    const response = await httpToken(refreshToken);
+                    const accessToken = response.parsedBody?.accessToken;
+                    setAccessToken(accessToken);
+                    setUser({email: email, refreshToken: refreshToken});
+
+                    return true;
+                }
+                return false;
+            },
+            logout: async () => {
                 setUser(null);
+                const storedUser = await AsyncStorage.getItem('user');
                 AsyncStorage.removeItem('user');
+                if(storedUser){
+                    const user : User = JSON.parse(storedUser);
+                    const refreshToken = user?.refreshToken;
+                    httpLogout(refreshToken);
+                }
             },
             accessToken
         }}>

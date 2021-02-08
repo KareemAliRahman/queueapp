@@ -11,7 +11,7 @@ interface RoutesProps{
 }
 
 export const Routes: React.FC<RoutesProps> = ({}) => {
-    const {user, login, logout} = useContext(AuthContext);
+    const {user, login, accessToken, authenticate} = useContext(AuthContext);
     const [ loading , setLoading ] = useState(true);
 
     //Effect to handle already logged in user
@@ -19,7 +19,10 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
         AsyncStorage.getItem('user')
             .then(user => {
                 if(user){
-                    login();
+                    authenticate();
+                    // console.log(user);
+                    // console.log("should fail");
+                    // login();
                 }
                 setLoading(false);
         }).catch(err => {

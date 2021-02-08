@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   },
   errorMsg:{
     color: 'red',
-    fontSize: 20,
+    fontSize: 15,
     fontFamily: 'OpenSans_400Regular',
     height: 40,
   }
