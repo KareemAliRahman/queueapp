@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express"; 
 import { createConnection } from "typeorm";
 import { UserRouter } from "./router/userRouter";
-import { QueueRouter } from "./router/queueRouter"
+import { QueueRouter } from "./router/QueueRouter"
 import { AuthRouter } from "./router/AuthRouter";
 import { verify } from "jsonwebtoken";
 
@@ -35,13 +35,13 @@ const startServer = async () => {
     console.log(req.body);
     next();
   });
-  // logging response
-  app.use((_req, res, next) => {
-    next();
-    console.log("---------------------------------");
-    console.log(res.statusCode);
-    // console.log(res);
-  });
+
+  // // logging response
+  // const afterLogger = (_req, res, next) => {
+  //   next();
+  //   console.log(res.statusCode);
+  // };
+
 
   // routes
   app.use('/', AuthRouter);

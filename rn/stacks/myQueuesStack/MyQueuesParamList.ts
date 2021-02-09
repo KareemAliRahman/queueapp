@@ -1,8 +1,10 @@
 import { RouteProp } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
+import { Queue } from "../../helper-compnents/QueueCard"
 
 export type MyQueuesParamList = {
-  MyQueueInfo: undefined,
+  NewQueue: undefined,
+  MyQueueInfo: {queue: Queue},
   MyQueuesList: undefined 
 }
 

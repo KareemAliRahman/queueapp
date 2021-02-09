@@ -31,6 +31,7 @@ export function Login({navigation, route} : AuthNavProps<'Login'>){
             try{
               setErrorMsg("");
               await login(email, pass);
+              // await login("kareem@ali.com", "kareem");
             }catch(error){
               setErrorMsg(error.message);
             }

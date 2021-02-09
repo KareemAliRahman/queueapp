@@ -7,13 +7,14 @@ export const QueueRouter = Router();
 
 // GET -> get all queues for an admin
 QueueRouter.get('/', async (req, res, _next) => {
+  const userId = req['user'].userId.userid;
   try{
-    const userRepo = getCustomRepository(UserRepo);
-    const user = await userRepo.findOne(req['user'].userId, {relations: ['queues']});
-    // const queues = await userRepo.find({where: {id: user.id}, relations: ['queues']});
-    res.status(200).json({queues: user.queues});
+    const queueRepo = getCustomRepository(QueueRepo);
+    const queues = await queueRepo.getMyQueues(userId);
+    // const user = await userRepo.findOne(req['user'].userId.userid, {relations: ['queues']});
+    res.status(200).json({queues: queues});
   }catch(error){
-    res.status(403).json({error: error,message: "failed to get all queues of admin"});
+    res.status(404).json({error: error,message: "failed to get all queues of admin"});
   }
 });
 
@@ -21,7 +22,8 @@ QueueRouter.get('/', async (req, res, _next) => {
 QueueRouter.get('/all', async (_req, res, _next) => {
   try{
     const queueRepo = getCustomRepository(QueueRepo);
-    const queues = await queueRepo.find();
+    // const queues = await queueRepo.find();
+    const queues = await queueRepo.getAllQueues();
     res.status(200).json({queues: queues});
   }catch(error){
     res.status(403);

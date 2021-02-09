@@ -46,7 +46,7 @@ AuthRouter.delete('/logout', (req, res) => {
 AuthRouter.post('/token', (req, res) => {
   const refreshToken = req.body.refreshToken;
   if(!refreshToken) return res.sendStatus(401);
-  if(!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
+  // if(!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
   verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, userId) => {
     if (err) return res.sendStatus(403)
     const newAccessToken = sign({userId: userId}, process.env.ACCESS_TOKEN_SECRET);

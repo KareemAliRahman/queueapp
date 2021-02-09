@@ -1,7 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { QueuesParamList } from './QueuesParamList';
-import { NewQueue } from './screens/NewQueue';
 import { QueueInfo } from './screens/QueueInfo';
 import { QueuesList } from './screens/QueuesList';
 
@@ -26,8 +25,7 @@ export const QueuesStack: React.FC<QueuesStackProps> = ({}) => {
     return(
         <Stack.Navigator screenOptions={stackHeaderOptions} initialRouteName='QueuesList'>
             <Stack.Screen name='QueuesList'  component={QueuesList} />
-            <Stack.Screen name='QueueInfo'  component={QueueInfo} />
-            <Stack.Screen name='NewQueue'  component={NewQueue} />
+            <Stack.Screen name='QueueInfo'  component={QueueInfo} options={{title: "Queue"}} />
         </Stack.Navigator>
     );
 };

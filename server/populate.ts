@@ -42,6 +42,7 @@ export const populate = async () => {
         queues => {
           Promise.all(queues.map(generateRandomMembers(users)))
           .catch(error => {
+            console.log(error.message);
           });
         }
       );

@@ -5,6 +5,37 @@ import {User} from "../entity/User";
 @EntityRepository(Queue)
 export class QueueRepo extends Repository<Queue>{
 
+    async getMyQueues(userId: string){
+      let queues = await this.createQueryBuilder("queue")
+        .leftJoinAndSelect("queue.admin", "admin")
+        .select([
+          "queue.id",
+          "name",
+          "description",
+          "organization",
+          "admin.firstName AS adminfname",
+          "admin.lastName AS adminlname"
+        ])
+        .where("queue.admin.id = :id", {id: userId})
+        .getRawMany();
+      return queues;
+    }
+
+    async getAllQueues(){
+      let queues = await this.createQueryBuilder("queue")
+        .leftJoinAndSelect("queue.admin", "admin")
+        .select([
+          "queue.id",
+          "name",
+          "description",
+          "organization",
+          "admin.firstName AS adminfname",
+          "admin.lastName AS adminlname"
+        ])
+        .getRawMany();
+        return queues;
+    }
+
     async createNewQueue(name: string
       , admin: User
       , organization: string
@@ -37,5 +68,6 @@ export class QueueRepo extends Repository<Queue>{
       }
       throw new Error("user is already a member");
     }
+
 
 }

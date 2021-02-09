@@ -12,7 +12,8 @@
     "start-ts": "nodemon --exec ts-node ./app.ts",
     "typeorm": "./node_modules/typeorm/cli.js",
     "build": "tsc -b",
-    "populate": "ts-node populate"
+    "populate": "ts-node populate",
+    "db-test": "ts-node dbtest.ts"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

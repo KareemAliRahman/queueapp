@@ -1,5 +1,4 @@
-import { cos } from "react-native-reanimated";
-import { AuthStack } from "../stacks/authStack/AuthStack";
+import { Queue } from "../helper-compnents/QueueCard";
 
 // const serverIp: string = 'http://10.0.2.2:4000/';
 const serverIp: string = 'http://192.168.1.38:4000';
@@ -9,25 +8,29 @@ interface HttpResponse<T> extends Response{
   parsedBody? : T;
 }
 
+export async function authenticated<T>(authenticationFun:() => void
+, httpFun: (accessToken: string) => Promise<HttpResponse<T>>
+, accessToken : string) {
+  try {
+    return await httpFun(accessToken);
+  } catch (error) {
+    // console.log("failed failed ya fashel fashel");
+    // access token or refresh token got expired
+    await authenticationFun();
+    return await httpFun(accessToken);
+  }
+}
+
 export async function http<T>(
   request: RequestInfo
 ): Promise<HttpResponse<T>> {
-  // const fetchResponse = fetch(request)
-  // .catch(e => {throw e})
-  // .then((response : HttpResponse<T> )=> 
-  //   response.json()
-  //   .catch(e => {throw e})
-  //   .then(parsedBody => { 
-  //     response.parsedBody = parsedBody;
-  //     if(!response.ok){
-  //       throw new Error(response.parsedBody);
-  //       return response;
-  //     }
-  //   }))
   try {
     const response: HttpResponse<T> = await fetch(request);
-    const parsedBody = await response.json()
-    response.parsedBody = parsedBody;
+    // console.log(response.status);
+    try{
+      const parsedBody = await response.json()
+      response.parsedBody = parsedBody;
+    }catch{}
     if (!response.ok && response.parsedBody) {
         throw new Error(response.parsedBody.message);
     }
@@ -105,5 +108,33 @@ export async function httpToken(refreshToken: string) {
       })
   });
   const response =  await http<{message: string, accessToken: string, refreshToken: string}>(req);
+  return response;
+}
+
+export async function httpAllQueues( accessToken: string ){
+  const req = new Request(serverIp + "/queues/all",
+  {
+    method: "get",
+    headers: {
+        'Accept' : 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + accessToken
+    }
+  });
+  const response = await http<{queues: Queue[]}>(req);
+  return response;
+}
+
+export async function httpMyQueues( accessToken: string ){
+  const req = new Request(serverIp + "/queues",
+  {
+    method: "get",
+    headers: {
+        'Accept' : 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + accessToken
+    }
+  });
+  const response = await http<{queues: Queue[]}>(req);
   return response;
 }
