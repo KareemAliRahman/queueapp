@@ -1,7 +1,8 @@
+import { cos } from "react-native-reanimated";
 import { AuthStack } from "../stacks/authStack/AuthStack";
 
 // const serverIp: string = 'http://10.0.2.2:4000/';
-const serverIp: string = 'http://192.168.1.39:4000';
+const serverIp: string = 'http://192.168.1.38:4000';
 
 //-------- utility functions --------------
 interface HttpResponse<T> extends Response{
@@ -11,20 +12,30 @@ interface HttpResponse<T> extends Response{
 export async function http<T>(
   request: RequestInfo
 ): Promise<HttpResponse<T>> {
-  const response: HttpResponse<T> = await fetch(
-    request
-  );
+  // const fetchResponse = fetch(request)
+  // .catch(e => {throw e})
+  // .then((response : HttpResponse<T> )=> 
+  //   response.json()
+  //   .catch(e => {throw e})
+  //   .then(parsedBody => { 
+  //     response.parsedBody = parsedBody;
+  //     if(!response.ok){
+  //       throw new Error(response.parsedBody);
+  //       return response;
+  //     }
+  //   }))
   try {
-    // may error if there is no body
-    response.parsedBody = await response.json();
-  } catch (ex) {
-    // throw new Error("bad data");
+    const response: HttpResponse<T> = await fetch(request);
+    const parsedBody = await response.json()
+    response.parsedBody = parsedBody;
+    if (!response.ok && response.parsedBody) {
+        throw new Error(response.parsedBody.message);
+    }
+    return response;
   }
-
-  if (!response.ok && response.parsedBody) {
-    throw new Error(response.parsedBody.message);
+  catch (error) {
+    throw error; 
   }
-  return response;
 }
 
 export async function httpRegister(firstName: string, lastName: string,

@@ -37,6 +37,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
                 const user = { email: email, refreshToken: refreshToken};
                 accessToken && setAccessToken(accessToken);
                 setUser(user);
+                AsyncStorage.removeItem('user');
                 AsyncStorage.setItem('user', JSON.stringify(user));
             },
             authenticate: async () => {
@@ -45,14 +46,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
                     const user : User = JSON.parse(storedUser);
                     const refreshToken = user?.refreshToken;
                     const email = user?.email;
-                    const response = await httpToken(refreshToken);
-                    const accessToken = response.parsedBody?.accessToken;
-                    setAccessToken(accessToken);
-                    setUser({email: email, refreshToken: refreshToken});
-
-                    return true;
+                    try{
+                        const response = await httpToken(refreshToken);
+                        const accessToken = response.parsedBody?.accessToken;
+                        setAccessToken(accessToken);
+                        setUser({email: email, refreshToken: refreshToken});
+                    }catch(error){
+                        setUser(null);
+                        const storedUser = await AsyncStorage.getItem('user');
+                        AsyncStorage.removeItem('user');
+                        if(storedUser){
+                            const user : User = JSON.parse(storedUser);
+                            const refreshToken = user?.refreshToken;
+                            httpLogout(refreshToken);
+                        }
+                        return;
+                    }
                 }
-                return false;
             },
             logout: async () => {
                 setUser(null);

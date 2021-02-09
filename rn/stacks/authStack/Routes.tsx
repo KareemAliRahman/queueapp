@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../../providers/AuthProvider';
 import { Center } from '../../helper-compnents/Center';
 import { Tabs } from '../../Tabs';
+import { cos } from 'react-native-reanimated';
 
 interface RoutesProps{
 }
@@ -17,12 +18,13 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
     //Effect to handle already logged in user
     useEffect(() => {
         AsyncStorage.getItem('user')
-            .then(user => {
+            .then(async user => {
                 if(user){
-                    authenticate();
-                    // console.log(user);
-                    // console.log("should fail");
-                    // login();
+                    try{
+                        await authenticate();
+                    }catch(e){
+                        console.log(e.message);
+                    }
                 }
                 setLoading(false);
         }).catch(err => {
