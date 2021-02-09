@@ -29,10 +29,18 @@ const startServer = async () => {
     res.send('Hello world')
   });
 
-  app.use((req, res, next) => {
+  // logging request
+  app.use((req, _res, next) => {
     console.log(req.method, req.url);
     console.log(req.body);
     next();
+  });
+  // logging response
+  app.use((_req, res, next) => {
+    next();
+    console.log("---------------------------------");
+    console.log(res.statusCode);
+    // console.log(res);
   });
 
   // routes

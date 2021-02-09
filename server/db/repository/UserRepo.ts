@@ -24,7 +24,8 @@ export class UserRepo extends Repository<User>{
       const errors = await validate(user);
       if(errors.length > 0) throw errors ;
       user.password = await hash(password, 12);
-      return this.insert(user);
+      await this.insert(user);
+      return user;
   }
 
   async loginUser(email: string, password: string){

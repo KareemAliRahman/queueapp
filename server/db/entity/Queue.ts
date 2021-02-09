@@ -5,7 +5,7 @@ import { User } from "./User";
 @Entity()
 export class Queue extends BaseEntity {
 
-  @PrimaryGeneratedColumn("uuid", { name: 'id' })
+  @PrimaryGeneratedColumn("rowid", { name: 'id' })
   id: string;
 
   @Column({ length: 100 , nullable: false })
@@ -23,7 +23,7 @@ export class Queue extends BaseEntity {
   @ManyToOne(type => User, admin => admin.queues)
   admin: User;
 
-  @ManyToMany(type => User, member => member.queues)
+  @ManyToMany(type => User, member => member.enlistedQueues)
   @JoinTable()
   members: User[];
 }

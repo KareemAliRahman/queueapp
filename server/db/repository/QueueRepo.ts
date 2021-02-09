@@ -5,7 +5,7 @@ import {User} from "../entity/User";
 @EntityRepository(Queue)
 export class QueueRepo extends Repository<Queue>{
 
-    createNewQueue(name: string
+    async createNewQueue(name: string
       , admin: User
       , organization: string
       , description = ""
@@ -15,12 +15,16 @@ export class QueueRepo extends Repository<Queue>{
         queue.organization = organization;
         queue.description = description;
         queue.admin = admin
-        return this.insert(queue);
+        await this.insert(queue);
+        return queue;
     }
 
     enlistInQueue(queue: Queue, member: User){
-      if(queue.members.some(u =>  u.id === member.id)) {
+      if(queue.members && queue.members.some(u =>  u.id === member.id)) {
         throw new Error("user is already a member");
+      }
+      if(!queue.members){
+        queue.members = new Array<User>();
       }
       queue.members.push(member);
       return queue.save();

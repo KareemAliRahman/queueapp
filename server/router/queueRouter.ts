@@ -57,7 +57,6 @@ QueueRouter.delete('/', async (req, res) => {
     const queueId = req.body.queueId;
     const user = await userRepo.findOne(req['user'].userId);
     const queue = await queueRepo.findOne({relations: ['admin']});
-    console.log(queue, user);
     if(queue.admin.id !== user.id){
       return res.status(401).json({message: "queue admin only can delete a queue"})
     }
