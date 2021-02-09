@@ -11,7 +11,6 @@ export function MyQueuesList({navigation, route} : MyQueuesNavProps<'MyQueuesLis
   const [queues, setQueues] = useState<Queue[]>([]);
 
   const getMyQueues = async () => {
-    console.log("getting queues");
     const queuesResponse  = await authenticated(authenticate, httpMyQueues, accessToken);
     const queues : Queue[] = queuesResponse.parsedBody?.queues;
     setQueues(queues);

@@ -11,9 +11,11 @@ QueueRouter.get('/', async (req, res, _next) => {
   try{
     const queueRepo = getCustomRepository(QueueRepo);
     const queues = await queueRepo.getMyQueues(userId);
+    console.log(queues);
     // const user = await userRepo.findOne(req['user'].userId.userid, {relations: ['queues']});
     res.status(200).json({queues: queues});
   }catch(error){
+    console.log("erroro");
     res.status(404).json({error: error,message: "failed to get all queues of admin"});
   }
 });

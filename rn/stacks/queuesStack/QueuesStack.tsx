@@ -1,5 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
+import { Button, TouchableOpacity, Text } from 'react-native';
+// import { TouchableOpacity } from 'react-native-gesture-handler';
 import { QueuesParamList } from './QueuesParamList';
 import { QueueInfo } from './screens/QueueInfo';
 import { QueuesList } from './screens/QueuesList';
@@ -24,7 +26,13 @@ const stackHeaderOptions =
 export const QueuesStack: React.FC<QueuesStackProps> = ({}) => {
     return(
         <Stack.Navigator screenOptions={stackHeaderOptions} initialRouteName='QueuesList'>
-            <Stack.Screen name='QueuesList'  component={QueuesList} />
+            {/* <Stack.Screen name='QueuesList'  component={QueuesList} /> */}
+            <Stack.Screen name='QueuesList' component={QueuesList}  options={{ 
+                headerRight: () => {
+                <TouchableOpacity
+                onPress={() => alert('This is a button!')}
+                ><Text>skjd</Text></TouchableOpacity>
+            }}} />
             <Stack.Screen name='QueueInfo'  component={QueueInfo} options={{title: "Queue"}} />
         </Stack.Navigator>
     );
