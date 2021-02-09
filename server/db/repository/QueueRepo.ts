@@ -28,9 +28,7 @@ export class QueueRepo extends Repository<Queue>{
 
     removeFromQueue(queue: Queue, member: User){
       if(queue.members.some(u =>  u.id === member.id)) {
-        console.log("indide if");
         queue.members = queue.members.filter((u) => u.id !== member.id);
-        console.log(queue.members);
         return queue.save();
       }
       throw new Error("user is already a member");
