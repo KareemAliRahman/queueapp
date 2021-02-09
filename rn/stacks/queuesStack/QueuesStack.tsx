@@ -8,17 +8,20 @@ import { QueuesList } from './screens/QueuesList';
 interface QueuesStackProps{}
 
 const Stack = createStackNavigator<QueuesParamList>();
-
 const stackHeaderOptions = 
 {
-    title: "",
+    title: 'Queues',
     headerStyle: {
         backgroundColor: '#0e639a',
         borderBottomStartRadius: 15,
         borderBottomEndRadius: 15
     },
     headerTintColor: '#fff',
-}
+    headerTitleStyle: {
+        alignSelf: 'center',
+        fontFamily: 'Inter_600SemiBold',
+        fontSize: 25
+}};
 export const QueuesStack: React.FC<QueuesStackProps> = ({}) => {
     return(
         <Stack.Navigator screenOptions={stackHeaderOptions} initialRouteName='QueuesList'>

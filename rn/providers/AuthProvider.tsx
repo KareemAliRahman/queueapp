@@ -51,15 +51,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
                         const accessToken = response.parsedBody?.accessToken;
                         setAccessToken(accessToken);
                         setUser({email: email, refreshToken: refreshToken});
+                    // if refreshToken expires -> force user to relogin
                     }catch(error){
                         setUser(null);
-                        const storedUser = await AsyncStorage.getItem('user');
                         AsyncStorage.removeItem('user');
-                        if(storedUser){
-                            const user : User = JSON.parse(storedUser);
-                            const refreshToken = user?.refreshToken;
-                            httpLogout(refreshToken);
-                        }
                         return;
                     }
                 }

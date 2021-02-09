@@ -29,6 +29,12 @@ const startServer = async () => {
     res.send('Hello world')
   });
 
+  app.use((req, res, next) => {
+    console.log(req.method, req.url);
+    console.log(req.body);
+    next();
+  });
+
   // routes
   app.use('/', AuthRouter);
   app.use('/users', UserRouter);

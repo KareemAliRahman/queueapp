@@ -37,7 +37,6 @@ AuthRouter.post('/login', async (req, res) => {
 
 // POST logout
 AuthRouter.delete('/logout', (req, res) => {
-  console.log(req);
   refreshTokens.filter((token => token !== req.body.refereshToken));
   res.sendStatus(204);
 });
