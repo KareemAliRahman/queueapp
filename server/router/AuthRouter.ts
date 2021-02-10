@@ -18,7 +18,7 @@ AuthRouter.post('/login', async (req, res) => {
     }
     const user = await userRepo.loginUser(email , password);
     const accessToken = generateAccessToken(user.id);
-    const refereshToken = sign({userid: user.id}
+    const refereshToken = sign({userId: user.id}
       , process.env.REFRESH_TOKEN_SECRET , {expiresIn: "7d"});
     refreshTokens.push(refereshToken);
     res.status(201).json({accessToken : accessToken

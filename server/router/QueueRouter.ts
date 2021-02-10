@@ -7,7 +7,7 @@ export const QueueRouter = Router();
 
 // GET -> get all queues for an admin
 QueueRouter.get('/', async (req, res, _next) => {
-  const userId = req['user'].userId.userid;
+  const userId = req['user'].userId;
   try{
     const queueRepo = getCustomRepository(QueueRepo);
     const queues = await queueRepo.getMyQueues(userId);

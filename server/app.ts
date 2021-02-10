@@ -32,6 +32,7 @@ const startServer = async () => {
   // logging request
   app.use((req, _res, next) => {
     console.log(req.method, req.url);
+    // console.log(req.headers);
     console.log(req.body);
     next();
   });
