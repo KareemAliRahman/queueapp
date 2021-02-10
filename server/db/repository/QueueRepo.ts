@@ -18,9 +18,6 @@ export class QueueRepo extends Repository<Queue>{
         ])
         .where("queue.admin.id = :id", {id: userId}).printSql()
         .getRawMany();
-        console.log("inside getMyQueues");
-        console.log(queues);
-        console.log("inside getMyQueues");
       return queues;
     }
 
