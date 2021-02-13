@@ -12,6 +12,9 @@ const authenticateToken = (req : Request, res :Response, next) => {
   if(!authHeader) return res.sendStatus(401);
   const accessToken = authHeader.split(' ')[1];
   verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err , user ) => {
+    // console.log("---------------authenticateToken------------------------");
+    // console.log(user);
+    // console.log("---------------authenticateToken------------------------");
     if(err) return res.sendStatus(403);
     req['user'] = user;
     next();

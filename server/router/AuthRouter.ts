@@ -47,9 +47,10 @@ AuthRouter.post('/token', (req, res) => {
   const refreshToken = req.body.refreshToken;
   if(!refreshToken) return res.sendStatus(401);
   // if(!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
-  verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, userId) => {
+  verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
     if (err) return res.sendStatus(403)
-    const newAccessToken = sign({userId: userId}, process.env.ACCESS_TOKEN_SECRET);
+    console.log("user from /token endpoint", user);
+    const newAccessToken = generateAccessToken(user.userId);
     res.status(201).json({ accessToken: newAccessToken, refereshToken: refreshToken, message: "new access token granted"});
   });
 });

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View }  from 'react-native';
 
 interface QueueCardProps {
-
+  queue: Queue
 }
 
 export type Queue = {
@@ -39,6 +39,6 @@ const styles = StyleSheet.create({
     paddingStart: 8,
     paddingEnd: 8,
     paddingTop: 4,
-    paddingBottom: 4
+    paddingBottom: 4,
   }
 });

@@ -13,7 +13,6 @@ QueueRouter.get('/', async (req, res, _next) => {
     const queues = await queueRepo.getMyQueues(userId);
     res.status(200).json({queues: queues});
   }catch(error){
-    console.log("erroro");
     res.status(404).json({error: error,message: "failed to get all queues of admin"});
   }
 });

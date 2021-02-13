@@ -16,7 +16,7 @@ export class QueueRepo extends Repository<Queue>{
           "admin.firstName AS adminfname",
           "admin.lastName AS adminlname"
         ])
-        .where("queue.admin.id = :id", {id: userId}).printSql()
+        .where("queue.admin.id = :id", {id: userId})
         .getRawMany();
       return queues;
     }
