@@ -57,7 +57,7 @@ const populate = async () => {
     users => {
       Promise.all(users.map(generateFakeQueue)).then(
         queues => {
-          Promise.all(queues.map(generateQrCode));
+          // Promise.all(queues.map(generateQrCode));
           Promise.all(queues.map(generateRandomMembers(users)))
           .catch(error => {
             console.log(error.message);

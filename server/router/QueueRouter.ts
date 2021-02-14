@@ -21,7 +21,6 @@ QueueRouter.get('/', async (req, res, _next) => {
 QueueRouter.get('/all', async (_req, res, _next) => {
   try{
     const queueRepo = getCustomRepository(QueueRepo);
-    // const queues = await queueRepo.find();
     const queues = await queueRepo.getAllQueues();
     res.status(200).json({queues: queues});
   }catch(error){

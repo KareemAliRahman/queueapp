@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View }  from 'react-native';
+import { StyleSheet, Text, View, Image }  from 'react-native';
 
 interface QueueCardProps {
   queue: Queue
@@ -11,7 +11,8 @@ export type Queue = {
   description: string,
   organization: string,
   adminfname: string,
-  adminlname: string
+  adminlname: string,
+  qrcode: string 
 }
 
 export const QueueCard: React.FC<QueueCardProps> = (props) => {
@@ -21,6 +22,8 @@ export const QueueCard: React.FC<QueueCardProps> = (props) => {
         <Text>I am a queue card</Text>
         <Text>{props.queue.adminfname}
         </Text>
+        <Image style={styles.qrcode} source={{uri: props.queue.qrcode }}/>
+        {/* <Text>{props.queue.qrcode}</Text> */}
         <Text>I am a queue card</Text>
       </View>
     );
@@ -41,5 +44,9 @@ const styles = StyleSheet.create({
     paddingEnd: 8,
     paddingTop: 4,
     paddingBottom: 4,
-  }
+  },
+  qrcode: {
+    width: 66, 
+    height: 58
+  },
 });

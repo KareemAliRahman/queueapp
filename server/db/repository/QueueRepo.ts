@@ -1,6 +1,7 @@
 import {EntityRepository, Repository} from "typeorm";
 import { Queue } from "../entity/Queue";
 import {User} from "../entity/User";
+import QRCode from 'qrcode';
 
 @EntityRepository(Queue)
 export class QueueRepo extends Repository<Queue>{
@@ -14,7 +15,8 @@ export class QueueRepo extends Repository<Queue>{
           "description",
           "organization",
           "admin.firstName AS adminfname",
-          "admin.lastName AS adminlname"
+          "admin.lastName AS adminlname",
+          "qrcode As qrcode"
         ])
         .where("queue.admin.id = :id", {id: userId})
         .getRawMany();
@@ -30,7 +32,8 @@ export class QueueRepo extends Repository<Queue>{
           "description",
           "organization",
           "admin.firstName AS adminfname",
-          "admin.lastName AS adminlname"
+          "admin.lastName AS adminlname",
+          "qrcode As qrcode"
         ])
         .getRawMany();
         return queues;
@@ -47,6 +50,8 @@ export class QueueRepo extends Repository<Queue>{
         queue.description = description;
         queue.admin = admin
         await this.insert(queue);
+        queue.qrcode = await QRCode.toDataURL(queue.id.toString(), {type: 'image/png'});
+        queue.save();
         return queue;
     }
 

@@ -1,7 +1,9 @@
+import { WSAEHOSTUNREACH } from "constants";
 import { createConnection, getConnection, getCustomRepository } from "typeorm";
 import { Queue } from "./db/entity/Queue";
 import { QueueRepo } from "./db/repository/QueueRepo";
 import { UserRepo } from "./db/repository/UserRepo";
+import QRCode from 'qrcode';
 
 async function dbtest() {
   const connection = await createConnection();
@@ -47,9 +49,17 @@ async function dbtest() {
   //   .where("queue.admin.id = :id", {id: userid})
   //   .getRawMany();
   //   console.log(queues);
-  const user = await userRepo.findOne("9f2a7381-1d40-47a7-8040-258e64ffc80e", {relations: ['queues']});
+  // const user = await userRepo.findOne("9f2a7381-1d40-47a7-8040-258e64ffc80e", {relations: ['queues']});
   // await queueRepo.createNewQueue("queue2", user, "org2", "desc2");
-  console.log(user.queues);
+
+  // const kareem  = await userRepo.find({id: "55dc1a1d-9759-47f9-9c52-07fd8d7d2a32"});
+  const queues = await queueRepo.find({where: {admin:  {id: "55dc1a1d-9759-47f9-9c52-07fd8d7d2a32"}}});
+  for (let index = 0; index < queues.length; index++) {
+    const o = queues[index];
+    o.qrcode = await QRCode.toDataURL(o.id.toString(), {type: 'image/png'});
+    o.save();
+  }
+  console.log(queues);
 
 }
 
