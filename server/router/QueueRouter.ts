@@ -37,7 +37,9 @@ QueueRouter.post('/', async (req, res) => {
     await queueRepo.createNewQueue(req.body.name 
       , user
       , req.body.organization
-      , req.body.description);
+      , req.body.description
+      , req.body.address
+      , req.body.startsAt);
     res.status(200).json({message: "queue created successfully"});
   }catch(error){
     res.status(403).json({error: error,message: "failed to create new queue"});

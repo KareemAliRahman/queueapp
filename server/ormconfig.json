@@ -6,7 +6,7 @@
   "password": "postgres",
   "database": "queueappdb",
   "synchronize": true,
-  "logging": false,
+  "logging": ["error"],
   "entities": [
      "db/entity/**/*.ts"
   ],

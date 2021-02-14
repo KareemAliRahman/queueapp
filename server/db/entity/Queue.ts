@@ -1,5 +1,5 @@
 import { Length } from "class-validator";
-import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, Timestamp } from "typeorm";
 import { User } from "./User";
 
 @Entity()
@@ -23,6 +23,12 @@ export class Queue extends BaseEntity {
   @Column({ length: 300 , nullable: true })
   @Length(1, 300)
   description: string;
+
+  @Column({nullable: false})
+  address: string
+
+  @Column("timestamp with time zone", {nullable: false})
+  startsAt: Date
 
   @ManyToOne(type => User, admin => admin.queues)
   admin: User;

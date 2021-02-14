@@ -2,6 +2,7 @@ import {EntityRepository, Repository} from "typeorm";
 import { Queue } from "../entity/Queue";
 import {User} from "../entity/User";
 import QRCode from 'qrcode';
+import { addListener } from "process";
 
 @EntityRepository(Queue)
 export class QueueRepo extends Repository<Queue>{
@@ -43,12 +44,16 @@ export class QueueRepo extends Repository<Queue>{
       , admin: User
       , organization: string
       , description = ""
+      , address = ""
+      , startsAt : Date
       ){
         let queue = new Queue();
         queue.name = name;
         queue.organization = organization;
         queue.description = description;
         queue.admin = admin
+        queue.address = address;
+        queue.startsAt = startsAt;
         await this.insert(queue);
         queue.qrcode = await QRCode.toDataURL(queue.id.toString(), {type: 'image/png'});
         queue.save();
