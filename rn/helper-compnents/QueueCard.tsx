@@ -1,5 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image }  from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons'; 
+import { Octicons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons'; 
 
 interface QueueCardProps {
   queue: Queue
@@ -12,26 +15,37 @@ export type Queue = {
   organization: string,
   adminfname: string,
   adminlname: string,
-  qrcode: string 
+  qrcode: string,
+  address: string,
+  startsAt: Date
 }
 
 export const QueueCard: React.FC<QueueCardProps> = (props) => {
-return(
-  <View style={styles.queueCard}>
-    <View style={styles.queueInfo}>
-      <Text style={styles.queueName}>{props.queue.name}</Text>
-      <Image style={styles.qrcode} source={{uri: props.queue.qrcode}}/>
+  return(
+    <View style={styles.queueCard}>
+      <View style={styles.queueInfo}>
+        <View style={styles.textInfo}>
+          <Text style={styles.queueName}>{props.queue.name}</Text>
+          <View style={{flexDirection: 'row'}}>
+            <Feather name="hash" size={24} color="#0e639a" />
+            <Text>{props.queue.queue_id}</Text>
+          </View>  
+          <View style={{flex: 10, flexDirection: 'row'}}>
+            <Octicons name="organization" size={24} color="#0e639a" />
+            <Text style={{flex: 8}}>{props.queue.organization}</Text>
+          </View>  
+        </View>
+        <Image style={styles.qrcode} source={{uri: props.queue.qrcode}}/>
+      </View>
+      <View style={{flexDirection: "row"}}>
+          <MaterialIcons name="queue" size={24} color="#0e639a" />
+          <Text style={{flex: 8}}>{props.queue.startsAt}</Text>
+      </View>
+      <View style={{flexDirection: "row"}}>
+          <Text style={{flex:8}} >{props.queue.address}</Text>
+      </View>
     </View>
-    <View style={{flexDirection: "row"}}>
-        <MaterialCommunityIcons style={{flex:1}} name="doctor" size={20} color="teal" />
-        <Text style={{flex: 8}}>{Speciality[props.doctor.speciality].split("_").join(" ")}</Text>
-    </View>
-    <View style={{flexDirection: "row"}}>
-        <Entypo style={{flex:1}} name="address" size={20} color="teal" />
-        <Text style={{flex:8}} >{props.doctor.address}</Text>
-    </View>
-  </View>
-);
+  );
     // return (
     //   <View style={styles.queueCard}>
     //     <Text>I am a queue card</Text>
@@ -71,6 +85,14 @@ const styles = StyleSheet.create({
     height: 100
   },
   queueName: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: '#0e639a',
+    alignSelf: 'flex-start',
+    fontFamily: 'Inter_600SemiBold',
+    fontSize: 20
+  },
+  textInfo: {
+    flexDirection: 'column',
+    alignItems: 'flex-start'
   }
 });

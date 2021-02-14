@@ -1,5 +1,4 @@
 import faker from 'faker';
-import { addListener } from 'process';
 import QRCode from 'qrcode';
 import { createConnection, getCustomRepository } from 'typeorm';
 import { Queue } from './db/entity/Queue';

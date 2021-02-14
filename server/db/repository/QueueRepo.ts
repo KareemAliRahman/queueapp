@@ -17,7 +17,9 @@ export class QueueRepo extends Repository<Queue>{
           "organization",
           "admin.firstName AS adminfname",
           "admin.lastName AS adminlname",
-          "qrcode As qrcode"
+          "qrcode",
+          "queue.startsAt",
+          "address",
         ])
         .where("queue.admin.id = :id", {id: userId})
         .getRawMany();
@@ -34,7 +36,9 @@ export class QueueRepo extends Repository<Queue>{
           "organization",
           "admin.firstName AS adminfname",
           "admin.lastName AS adminlname",
-          "qrcode As qrcode"
+          "qrcode",
+          "queue.startsAt",
+          "address",
         ])
         .getRawMany();
         return queues;
