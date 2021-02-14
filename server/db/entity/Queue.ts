@@ -8,6 +8,10 @@ export class Queue extends BaseEntity {
   @PrimaryGeneratedColumn("rowid", { name: 'id' })
   id: string;
 
+  //qrcode dataurl
+  @Column({nullable: true})
+  qrcode: string;
+
   @Column({ length: 100 , nullable: false })
   @Length(1, 100)
   name: string;

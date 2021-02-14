@@ -54,7 +54,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
                     // if refreshToken expires -> force user to relogin
                     }catch(error){
                         setUser(null);
-                        AsyncStorage.removeItem('user');
+                        // AsyncStorage.removeItem('user');
                         return;
                     }
                 }

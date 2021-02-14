@@ -18,6 +18,7 @@ export const QueueCard: React.FC<QueueCardProps> = (props) => {
     return (
       <View style={styles.queueCard}>
         <Text>I am a queue card</Text>
+        <Text>I am a queue card</Text>
         <Text>{props.queue.adminfname}
         </Text>
         <Text>I am a queue card</Text>

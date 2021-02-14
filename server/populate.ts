@@ -1,13 +1,14 @@
-import faker, { fake } from 'faker';
-import { createConnection, FileLogger, getCustomRepository } from 'typeorm';
+import faker from 'faker';
+import QRCode from 'qrcode';
+import { getCustomRepository } from 'typeorm';
 import { Queue } from './db/entity/Queue';
 import { User } from './db/entity/User';
 import { QueueRepo } from './db/repository/QueueRepo';
 import { UserRepo } from './db/repository/UserRepo';
 
 const generateFakeUser = () : Promise<User> => {
-  const userRepo = getCustomRepository(UserRepo);
-  return userRepo.registerNewUser(faker.name.firstName()
+  const userrepo = getCustomRepository(UserRepo);
+  return userrepo.registerNewUser(faker.name.firstName()
   , faker.name.lastName()
   , faker.internet.email()
   , faker.internet.password());
@@ -34,12 +35,29 @@ const generateRandomMembers = (users : User[]) => {
   return fun;
 }
 
-export const populate = async () => {
-  await createConnection();
+const generateQrCode = async (queue: Queue) => {
+  const id : string = queue.id;
+  const dataUrl = await QRCode.toDataURL(id.toString(), {type: 'image/png'});
+  console.log(dataUrl);
+  queue.qrcode = dataUrl;
+  queue.save();
+}
+
+const generateSpecialUser = async () => {
+  const userRepo = getCustomRepository(UserRepo);
+  const queueRepo = getCustomRepository(QueueRepo);
+  const kareem  = await userRepo.registerNewUser( "kareem", "Ali", "kareem@ali.com", "kareem");
+  queueRepo.createNewQueue("queue1", kareem, "organization1", "description1");
+  queueRepo.createNewQueue("queue2", kareem, "organization2", "description2");
+}
+
+const populate = async () => {
+  await generateSpecialUser();
   Promise.all(new Array(30).fill(0).map(generateFakeUser)).then(
     users => {
       Promise.all(users.map(generateFakeQueue)).then(
         queues => {
+          Promise.all(queues.map(generateQrCode));
           Promise.all(queues.map(generateRandomMembers(users)))
           .catch(error => {
             console.log(error.message);

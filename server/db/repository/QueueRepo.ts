@@ -69,5 +69,4 @@ export class QueueRepo extends Repository<Queue>{
       throw new Error("user is already a member");
     }
 
-
 }
