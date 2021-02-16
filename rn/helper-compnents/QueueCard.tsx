@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image }  from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'; 
 import { Octicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons'; 
 import { Ionicons } from '@expo/vector-icons'; 
@@ -31,10 +30,12 @@ export const QueueCard: React.FC<QueueCardProps> = (props) => {
             <Feather name="hash" size={15} color="#0e639a" />
             <Text style={styles.textInfo}>{props.queue.queue_id}</Text>
           </View>  
-          <View style={styles.textLine}>
-            <Octicons name="organization" size={15} color="#0e639a" />
-            <Text style={styles.textInfo}>{props.queue.organization}</Text>
-          </View>  
+          {props.queue.organization && (
+            <View style={styles.textLine}>
+              <Octicons name="organization" size={15} color="#0e639a" />
+              <Text style={styles.textInfo}>{props.queue.organization}</Text>
+            </View>  
+          )}
         </View>
         <Image style={styles.qrcode} source={{uri: props.queue.qrcode}}/>
       </View>
