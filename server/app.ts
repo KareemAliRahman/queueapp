@@ -55,6 +55,9 @@ const startServer = async () => {
   app.listen(process.env.PORT || 4000, () => {
     console.log("server started");
   });
+  // app.listen(4000, "0.0.0.0", () => {
+  //   console.log("server started");
+  // });
 };
 
 startServer();

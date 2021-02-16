@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image }  from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { Octicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons'; 
 
 interface QueueCardProps {
   queue: Queue
@@ -17,32 +18,33 @@ export type Queue = {
   adminlname: string,
   qrcode: string,
   address: string,
-  startsAt: Date
+  queue_startsAt: Date
 }
 
 export const QueueCard: React.FC<QueueCardProps> = (props) => {
   return(
     <View style={styles.queueCard}>
       <View style={styles.queueInfo}>
-        <View style={styles.textInfo}>
+        <View style={{alignContent: 'stretch'}}>
           <Text style={styles.queueName}>{props.queue.name}</Text>
-          <View style={{flexDirection: 'row'}}>
-            <Feather name="hash" size={24} color="#0e639a" />
-            <Text>{props.queue.queue_id}</Text>
+          <View style={styles.textLine}>
+            <Feather name="hash" size={15} color="#0e639a" />
+            <Text style={styles.textInfo}>{props.queue.queue_id}</Text>
           </View>  
-          <View style={{flex: 10, flexDirection: 'row'}}>
-            <Octicons name="organization" size={24} color="#0e639a" />
-            <Text style={{flex: 8}}>{props.queue.organization}</Text>
+          <View style={styles.textLine}>
+            <Octicons name="organization" size={15} color="#0e639a" />
+            <Text style={styles.textInfo}>{props.queue.organization}</Text>
           </View>  
         </View>
         <Image style={styles.qrcode} source={{uri: props.queue.qrcode}}/>
       </View>
-      <View style={{flexDirection: "row"}}>
-          <MaterialIcons name="queue" size={24} color="#0e639a" />
-          <Text style={{flex: 8}}>{props.queue.startsAt}</Text>
+      <View style={styles.textLine}>
+          <Ionicons name="time" size={15} color="#0e639a" />
+          <Text style={styles.textInfo}>{props.queue.queue_startsAt.toLocaleString()}</Text>
       </View>
-      <View style={{flexDirection: "row"}}>
-          <Text style={{flex:8}} >{props.queue.address}</Text>
+      <View style={styles.textLine}>
+          <Ionicons name="location" size={15} color="#0e639a" />
+          <Text style={styles.textInfo}>{props.queue.address}</Text>
       </View>
     </View>
   );
@@ -76,6 +78,7 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
   },
   queueInfo: {
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -92,7 +95,13 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   textInfo: {
-    flexDirection: 'column',
-    alignItems: 'flex-start'
+    // flexDirection: 'column',
+    // alignItems: 'flex-start',
+    fontFamily: 'Inter_500Medium',
+    marginStart: 10
+  },
+  textLine: {
+    flexDirection: 'row', 
+    alignItems: 'center'
   }
 });
