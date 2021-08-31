@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     marginHorizontal: 4,
-    marginVertical: 6,
+    marginTop: 6,
     paddingStart: 8,
     paddingEnd: 8,
     paddingTop: 8,
@@ -63,12 +63,6 @@ const styles = StyleSheet.create({
     width: 350, 
     height: 350,
   },
-  queueInfo: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
   queueName: {
     fontWeight: 'bold',
     color: '#0e639a',
@@ -77,8 +71,6 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   textInfo: {
-    // flexDirection: 'column',
-    // alignItems: 'flex-start',
     fontFamily: 'Inter_500Medium',
     marginStart: 10
   },
