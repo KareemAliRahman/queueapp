@@ -1,6 +1,6 @@
 import { Queue } from "../helper-compnents/QueueCard";
 
-const serverIp: string = "http://192.168.1.33:4000";
+const serverIp: string = "http://192.168.1.20:4000";
 // const serverIp: string = "http://102.46.66.249:4000";
 
 //-------- utility functions --------------

@@ -12,7 +12,7 @@
     "start-ts": "nodemon --exec ts-node ./app.ts",
     "typeorm": "node ./node_modules/typeorm/cli.js -f ormconfig.json",
     "build": "tsc -b",
-    "populate": "ts-node populate",
+    "populate": "node build/populate.js",
     "db-test": "ts-node dbtest.ts"
   },
   "dependencies": {
