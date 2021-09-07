@@ -2,15 +2,16 @@ version: "3.4"
 
 services:
   db:
-    # image: "postgres:13.3-alpine"
     build: ./db
-    environment: 
+    environment:
       POSTGRES_PASSWORD: postgres
     ports:
       - 5432:5432
   api:
     build: .
-    ports: 
-      - 4000:4000 
-    depends_on: 
+    ports:
+      - 4000:4000
+    environment:
+      DB_HOST: db
+    depends_on:
       - db
