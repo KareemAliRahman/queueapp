@@ -125,4 +125,4 @@ web-build/
 .DS_Store
 
 # demo file to test things
-demo.ts
+demo.*
