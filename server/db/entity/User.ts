@@ -33,11 +33,11 @@ export class User extends BaseEntity {
   password: string;
 
   @Column({ length: 50, nullable: false })
-  @IsNotEmpty()
+  @IsNotEmpty({ message: "first name should not be empty" })
   firstName: string;
 
   @Column({ length: 50, nullable: false })
-  @IsNotEmpty({ message: "first name should'nt be empty" })
+  @IsNotEmpty({ message: "last name should not be empty" })
   lastName: string;
 
   @OneToMany((type) => Queue, (queue) => queue.admin)

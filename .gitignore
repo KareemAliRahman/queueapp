@@ -126,3 +126,5 @@ web-build/
 
 # demo file to test things
 demo.*
+
+.vscode
