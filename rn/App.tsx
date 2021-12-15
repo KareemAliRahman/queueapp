@@ -1,11 +1,8 @@
-import React from 'react';
-import { AuthProvider } from './providers/AuthProvider';
-import { Routes } from './stacks/authStack/Routes';
-import AppLoading from 'expo-app-loading';
-import {
-  useFonts,
-  LobsterTwo_700Bold
-} from '@expo-google-fonts/lobster-two';
+import React from "react";
+import { AuthProvider } from "./providers/AuthProvider";
+import { Routes } from "./stacks/authStack/Routes";
+import AppLoading from "expo-app-loading";
+import { useFonts, LobsterTwo_700Bold } from "@expo-google-fonts/lobster-two";
 import {
   Inter_100Thin,
   Inter_200ExtraLight,
@@ -16,7 +13,7 @@ import {
   Inter_700Bold,
   Inter_800ExtraBold,
   Inter_900Black,
-} from '@expo-google-fonts/inter';
+} from "@expo-google-fonts/inter";
 import {
   OpenSans_300Light,
   OpenSans_300Light_Italic,
@@ -28,9 +25,7 @@ import {
   OpenSans_700Bold_Italic,
   OpenSans_800ExtraBold,
   OpenSans_800ExtraBold_Italic,
-} from '@expo-google-fonts/open-sans';
-
-
+} from "@expo-google-fonts/open-sans";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -50,13 +45,13 @@ export default function App() {
     OpenSans_800ExtraBold,
     OpenSans_800ExtraBold_Italic,
   });
-  if(!fontsLoaded){
-    return <AppLoading/>;
+  if (!fontsLoaded) {
+    return <AppLoading />;
   }
 
-  return(
+  return (
     <AuthProvider>
-        <Routes/>
+      <Routes />
     </AuthProvider>
   );
 }

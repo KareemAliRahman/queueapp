@@ -108,11 +108,9 @@ QueueRouter.delete("/members", async (req, res) => {
     queueRepo.removeFromQueue(queue, user);
     res.status(200).json({ message: "member removed successfully" });
   } catch (err) {
-    res
-      .status(403)
-      .json({
-        error: err.message,
-        message: "failed to remove member from queue",
-      });
+    res.status(403).json({
+      error: err.message,
+      message: "failed to remove member from queue",
+    });
   }
 });

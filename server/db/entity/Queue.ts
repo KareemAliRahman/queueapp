@@ -1,4 +1,4 @@
-import { Length } from 'class-validator';
+import { Length } from "class-validator";
 import {
   BaseEntity,
   Column,
@@ -8,12 +8,12 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   Timestamp,
-} from 'typeorm';
-import { User } from './User';
+} from "typeorm";
+import { User } from "./User";
 
 @Entity()
 export class Queue extends BaseEntity {
-  @PrimaryGeneratedColumn('rowid', { name: 'id' })
+  @PrimaryGeneratedColumn("rowid", { name: "id" })
   id: string;
 
   //qrcode dataurl
@@ -35,7 +35,7 @@ export class Queue extends BaseEntity {
   @Column({ nullable: false })
   address: string;
 
-  @Column('timestamp with time zone', { nullable: false })
+  @Column("timestamp with time zone", { nullable: false })
   startsAt: Date;
 
   @ManyToOne((type) => User, (admin) => admin.queues)
