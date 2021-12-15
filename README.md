@@ -9,7 +9,7 @@ queueapp
 - [ ] search functionality in queues screen (using _postgres to_tsvector_)
 - [ ] find queue by qr-code
 
-### _queue management_:
+### _queue admin management_:
 
 - [ ] create new queue screen
 - [ ] queue creator can delete queue

@@ -1,0 +1,12 @@
+{
+  "password_is_required": "password is required",
+  "password_too_small": "password should be at least 5 characters",
+  "firstName_too_big": "first-name should be less than 50 characters",
+  "firstName_is_required": "first-name is required",
+  "lastName_is_required": "last-name is required",
+  "lastName_too_big": "last-name should be less than 50 characters",
+  "email_is_required": "email is required",
+  "invalid_email": "invalid email",
+  "user_created": "user created successfully",
+  "invalid_email_or_password": "invalid email or password"
+}

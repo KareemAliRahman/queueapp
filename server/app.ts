@@ -1,11 +1,16 @@
 import express, { Request, Response } from "express";
 import { createConnection } from "typeorm";
-import { UserRouter } from "./router/userRouter";
+import { UserRouter } from "./router/UserRouter";
 import { QueueRouter } from "./router/QueueRouter";
 import { AuthRouter } from "./router/AuthRouter";
 import { verify } from "jsonwebtoken";
+import i18next from "i18next";
+import i18nextFsBackend from "i18next-fs-backend";
+import i18nextMiddleware from "i18next-http-middleware";
+import { join } from "path";
 
 const app = express();
+// app.use(i18nextMiddleware.handle(i18next));
 
 const authenticateToken = (req: Request, res: Response, next) => {
   const authHeader = req.headers.authorization;
@@ -24,9 +29,19 @@ const authenticateToken = (req: Request, res: Response, next) => {
 const startServer = async () => {
   // connecting to postgres db
   await createConnection();
+  i18next
+    .use(i18nextFsBackend)
+    .use(i18nextMiddleware.LanguageDetector)
+    .init({
+      fallbackLng: "en",
+      backend: {
+        loadPath: join("./locales/{{lng}}/translation.json"),
+      },
+    });
 
   // middleware for post requests
   app.use(express.json());
+  app.use(i18nextMiddleware.handle(i18next));
 
   app.get("/", (_req, res, _next) => {
     res.send("Hello world");
@@ -48,6 +63,10 @@ const startServer = async () => {
 
   // routes
   app.use("/", AuthRouter);
+  app.get("/ayklam", (req, res) => {
+    res.status(200).json(req.t("password_required"));
+  });
+
   app.use("/users", UserRouter);
   app.use("/queues", authenticateToken, QueueRouter);
 

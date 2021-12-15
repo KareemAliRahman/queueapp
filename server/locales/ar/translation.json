@@ -1,0 +1,12 @@
+{
+  "password_is_required": "يجب إدخال  كلمة السر",
+  "password_too_small": "كلمة السر يجب أن تكون أكبر من 5 أحرف",
+  "firstName_too_big": "الإسم الأول يجب أن يكون أصغر من 50 حرف",
+  "firstName_is_required": "يجب إدخال الإسم الأول",
+  "lastName_is_required": "يجب إدخال الإسم الثاني",
+  "lastName_too_big": "الإسم الثاني يجب أن يكون أصغر من 50 حرف",
+  "email_is_required": "يجب إدخال البريد الإلكتروني",
+  "invalid_email": "بريد إلكتروني خاطئ",
+  "user_created": "تم إنشاء حساب بنجاح",
+  "invalid_email_or_password": "بريد إلكتروني أو كلمة سر غير صحيحة"
+}
